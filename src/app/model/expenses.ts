@@ -1,11 +1,11 @@
 interface NewExpense {
-    name: string
+    payerId: string
     amount: string
     description: string
 }
 
 interface Expense {
-    name: string
+    payerId: string
     amount: string
     payDate: Date
     description: string

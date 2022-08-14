@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Balance } from '../model/balance';
+import { StateService } from '../services/state.service';
 
 @Component({
   selector: 'app-balance',
@@ -8,19 +9,13 @@ import { Balance } from '../model/balance';
 })
 export class BalanceComponent implements OnInit {
 
-  balance: Balance = {
-    balanceItems: [
-      { name: "Francisco Buyo", amount: "1000" },
-      { name: "Alfonso Pérez", amount: "2255" },
-      { name: "Raúl González", amount: "-4085" },
-      { name: "José María Gutiérrez", amount: "-4085" },
+  balance: Balance = { balanceItems: [] }
 
-    ]
-  }
-
-  constructor() { }
+  constructor(private stateService: StateService) { }
 
   ngOnInit(): void {
+    this.stateService.getBalance()
+      .subscribe(balance => this.balance = balance)
   }
 
 }

@@ -10,6 +10,7 @@ import { BalanceComponent } from './balance/balance.component';
 import { HomeComponent } from './home/home.component';
 import { FormsModule } from '@angular/forms';
 
+
 @NgModule({
   declarations: [
     AppComponent,

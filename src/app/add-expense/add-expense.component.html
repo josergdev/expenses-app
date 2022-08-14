@@ -2,14 +2,11 @@
 
 <pre> {{newExpense | json}} </pre>
 
-<pre> {{errors | json}} </pre>
-
-
 <form (ngSubmit)="onSubmit(expenseForm)" #expenseForm="ngForm" ngNativeValidate>
 
     <label for="friend">Amigo</label>
-    <select id="friend" [(ngModel)]="newExpense.name" name="name" required>
-        <option *ngFor="let friend of friends.friends">
+    <select id="friend" [(ngModel)]="newExpense.payerId" name="payerId" required>
+        <option *ngFor="let friend of friends.friends" [value]="friend.id">
             {{friend.name}}
         </option>
     </select>
@@ -23,4 +20,4 @@
     <button type="submit" [disabled]="expenseForm.form.invalid">Añadir</button>
 </form>
 
-<pre> {{ (expenses | async)?.expenses | json }}</pre>
+<pre> {{ expenses | async | json }}</pre>

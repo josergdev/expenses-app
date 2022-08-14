@@ -1,41 +1,31 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Expense, Expenses, NewExpense } from 'src/app/model/expenses';
+import { Expenses, NewExpense } from 'src/app/model/expenses';
 import { Friends, NewFriend } from '../model/friend';
 import { v4 as uuidV4 } from 'uuid';
+import { Balance } from '../model/balance';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StateService {
-  private expenses: Expenses = {
-    expenses: [
-      {
-        name: "Francisco Buyo",
-        amount: "10000",
-        description: "Cena",
-        payDate: new Date()
-      },
-      {
-        name: "Alfonso Pérez",
-        amount: "1000",
-        description: "Taxi",
-        payDate: new Date()
-      },
-      {
-        name: "Alfonso Pérez",
-        amount: "5340",
-        description: "Cena",
-        payDate: new Date()
-      }
-    ]
-  }
-  private expensesSubject: BehaviorSubject<Expenses> = new BehaviorSubject<Expenses>(this.expenses)
+  private expenses: Expenses = { expenses: [] }
+  private expensesSubject = new BehaviorSubject<Expenses>(this.expenses)
 
   private friends: Friends = { friends: [] }
-  private friendsSubject: BehaviorSubject<Friends> = new BehaviorSubject<Friends>(this.friends)
+  private friendsSubject = new BehaviorSubject<Friends>(this.friends)
+
+  private balance: Balance = { balanceItems: [] }
+  private balanceSubject = new BehaviorSubject<Balance>(this.balance)
 
   constructor() {
+    this.friendsSubject
+      .subscribe(friends => {
+        this.balance = {
+          balanceItems: friends.friends.map(friend => ({ name: friend.name, amount: "0" }))
+        }
+        this.balanceSubject.next(this.balance)
+      })
   }
 
   getExpenses(): Observable<Expenses> {
@@ -44,7 +34,7 @@ export class StateService {
 
   addExpense(newExpense: NewExpense) {
     this.expenses = {
-      expenses: this.expenses.expenses.concat({ payDate: new Date(), ...newExpense })
+      expenses: this.expenses.expenses.concat({ ...newExpense, payDate: new Date() })
     }
     this.expensesSubject.next(this.expenses)
   }
@@ -58,5 +48,9 @@ export class StateService {
       friends: this.friends.friends.concat({ id: uuidV4(), ...friend })
     }
     this.friendsSubject.next(this.friends)
+  }
+
+  getBalance(): Observable<Balance> {
+    return this.balanceSubject.asObservable()
   }
 }
