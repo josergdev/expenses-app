@@ -1,15 +1,7 @@
 <h2>Expenses:</h2>
-<ul>
+
+<ol>
     <li *ngFor="let expense of expenses.expenses">
-        <dl>
-            <dt>Amigo</dt>
-            <dd>{{ expense.name }}</dd>
-            <dt>Cocepto</dt>
-            <dd>{{ expense.description }}</dd>
-            <dt>Monto</dt>
-            <dd>{{ expense.amount }}</dd>
-            <dt>Fecha</dt>
-            <dd>{{ expense.payDate }}</dd>
-        </dl>
+        <pre>{{ expense | json }}</pre>
     </li>
-</ul>
+</ol>
