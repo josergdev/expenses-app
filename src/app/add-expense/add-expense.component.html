@@ -1,1 +1,17 @@
-<p>add-expense works!</p>
+<h2>Add Expense</h2>
+
+<form (ngSubmit)="onSubmit()" #expenseForm="ngForm">
+
+    <label for="friend">Amigo</label>
+    <select id="friend">
+        <option>Francisco Buyo</option>
+        <option>Alfonso Pérez</option>
+        <option>Raúl González</option>
+        <option>José María Gutiérrez</option>
+    </select>
+
+    <label for="amount">Pago</label>
+    <input id="amount" type="text" required>
+
+    <button type="submit">Añadir</button>
+</form>
