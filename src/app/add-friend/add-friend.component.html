@@ -1,7 +1,9 @@
 <h2>Add Friend</h2>
 
-<form #friendForm="ngForm">
+<form (ngSubmit)="onSubmit(friendForm)" #friendForm="ngForm">
     <label for="name">Nombre</label>
-    <input id="name" type="text" required>
+    <input id="name" type="text" required [(ngModel)]="newFriend.name" name="name">
     <button type="submit">Añadir</button>
 </form>
+
+<pre> {{ friends | json }} </pre>

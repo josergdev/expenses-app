@@ -1,3 +1,9 @@
+interface NewExpense {
+    name: string
+    amount: string
+    description: string
+}
+
 interface Expense {
     name: string
     amount: string
@@ -9,4 +15,4 @@ interface Expenses {
     expenses: Expense[]
 }
 
-export { Expenses, Expense }
+export { NewExpense, Expenses, Expense }

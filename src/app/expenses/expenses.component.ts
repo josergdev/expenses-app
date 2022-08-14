@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Expenses, Expense } from './expenses';
+import { StateService } from '../services/state.service';
+import { Expenses, Expense } from '../model/expenses';
 
 @Component({
   selector: 'app-expenses',
@@ -7,33 +8,13 @@ import { Expenses, Expense } from './expenses';
   styleUrls: ['./expenses.component.css']
 })
 export class ExpensesComponent implements OnInit {
+  expenses: Expenses = { expenses: [] };
 
-  expenses: Expenses = {
-    expenses: [
-      {
-        name: "Francisco Buyo",
-        amount: "10000",
-        description: "Cena",
-        payDate: new Date()
-      },
-      {
-        name: "Alfonso Pérez",
-        amount: "1000",
-        description: "Taxi",
-        payDate: new Date()
-      },
-      {
-        name: "Alfonso Pérez",
-        amount: "5340",
-        description: "Cena",
-        payDate: new Date()
-      }
-    ]
-  }
-
-  constructor() { }
+  constructor(private stateService: StateService) { }
 
   ngOnInit(): void {
+    this.stateService.getExpenses()
+      .subscribe(expenses => this.expenses = expenses)
   }
 
 }

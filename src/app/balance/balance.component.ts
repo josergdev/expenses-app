@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Balance } from './balance';
+import { Balance } from '../model/balance';
 
 @Component({
   selector: 'app-balance',
