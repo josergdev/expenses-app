@@ -8,6 +8,7 @@ import { AddFriendComponent } from './add-friend/add-friend.component';
 import { AddExpenseComponent } from './add-expense/add-expense.component';
 import { BalanceComponent } from './balance/balance.component';
 import { HomeComponent } from './home/home.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { HomeComponent } from './home/home.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
