@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of, tap } from 'rxjs';
 import { Balance } from '../model/balance';
+import { Compensation } from '../model/compensation';
 import { Expense, Expenses, NewExpense } from '../model/expenses';
 import { Friend, Friends, NewFriend } from '../model/friend';
 
@@ -59,6 +60,16 @@ export class ApiService {
       catchError((error: any) => {
         console.error(error)
         return of({ balanceItems: [] })
+      })
+    )
+  }
+
+  getCompensation() {
+    return this.http.get<Compensation>(`${this.expensesUrl}/compensation`).pipe(
+      tap(compensation => console.log('fetched', compensation)),
+      catchError((error: any) => {
+        console.error(error)
+        return of({ compensationItems: [] })
       })
     )
   }

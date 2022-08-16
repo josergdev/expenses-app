@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Balance } from '../model/balance';
+import { Compensation } from '../model/compensation';
 import { Expenses } from '../model/expenses';
 import { Friends } from '../model/friend';
 import { StateService } from '../services/state.service';
@@ -12,7 +13,8 @@ import { StateService } from '../services/state.service';
 export class HomeComponent implements OnInit {
   expenses!: Expenses
   friends!: Friends
-  balance!: Balance;
+  balance!: Balance
+  compensation!: Compensation
 
   constructor(private stateService: StateService) { }
 
@@ -23,6 +25,8 @@ export class HomeComponent implements OnInit {
       .subscribe(friends => this.friends = friends)
     this.stateService.getBalance()
       .subscribe(balance => this.balance = balance)
+    this.stateService.getCompensation()
+      .subscribe(compensation => this.compensation = compensation)
   }
 
 }

@@ -4,6 +4,7 @@ import { Expenses, NewExpense } from 'src/app/model/expenses';
 import { Friends, NewFriend } from '../model/friend';
 import { Balance } from '../model/balance';
 import { ApiService } from './api.service';
+import { Compensation } from '../model/compensation';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,9 @@ export class StateService {
 
   private balance: Balance = { balanceItems: [] }
   private balanceSubject = new BehaviorSubject<Balance>(this.balance)
+
+  private compensation: Compensation = { compensationItems: [] }
+  private compensationSubject = new BehaviorSubject<Compensation>(this.compensation)
 
   constructor(private apiService: ApiService) { }
 
@@ -65,15 +69,21 @@ export class StateService {
   }
 
   getBalance(): Observable<Balance> {
-    this.updateBalanceState()
+    this.apiService.getBalance().subscribe(
+      balance => this.balanceSubject.next(balance)
+    )
 
     return this.balanceSubject.asObservable()
   }
 
-  private updateBalanceState() {
-    this.apiService.getBalance().subscribe(
-      balance => this.balanceSubject.next(balance)
+
+  getCompensation(): Observable<Compensation> {
+    this.apiService.getCompensation().subscribe(
+      compensation => this.compensationSubject.next(compensation)
     )
+
+    return this.compensationSubject.asObservable()
   }
+
 
 }

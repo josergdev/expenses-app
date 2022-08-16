@@ -1,5 +1,6 @@
 <h2>Compensación</h2>
 
 <div *ngFor="let compensationItem of compensation.compensationItems">
-    {{ compensationItem.debtorId }} -> {{compensationItem.creditorId}} ({{ compensationItem.amount }})
+    {{ friendName(compensationItem.debtorId) }} -> {{ friendName(compensationItem.creditorId) }} ({{
+    amountFromDecimal(compensationItem.amount) | currency:'EUR' }})
 </div>

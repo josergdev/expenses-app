@@ -1,26 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Compensation } from '../model/compensation';
+import { Friends } from '../model/friend';
 
 @Component({
   selector: 'app-compensation',
   templateUrl: './compensation.component.html',
   styleUrls: ['./compensation.component.css']
 })
-export class CompensationComponent implements OnInit {
+export class CompensationComponent {
+  @Input() friends: Friends = { friends: [] }
+  @Input() compensation: Compensation = { compensationItems: [] }
 
-  compensation: Compensation = {
-    compensationItems: [
-      {
-        debtorId: "Jose",
-        creditorId: "Francisco",
-        amount: "1000"
-      }
-    ]
+  friendName(friendId: string) {
+    return this.friends.friends.filter(friend => friend.id == friendId)[0].name
   }
 
-  constructor() { }
-
-  ngOnInit(): void {
+  amountFromDecimal(amount: string) {
+    return parseInt(amount) / 100
   }
-
 }
