@@ -1,18 +1,17 @@
 <h2>Añadir amigo</h2>
-<div>
-    <form (ngSubmit)="onSubmit(friendForm)" #friendForm="ngForm" ngNativeValidate>
-        <fieldset>
-            <label for="name">Nombre</label>
-            <input id="name" type="text" required [(ngModel)]="newFriend.name" name="name">
-        </fieldset>
 
-        <button type="submit" [disabled]="friendForm.form.invalid">Añadir</button>
-    </form>
+<form (ngSubmit)="onSubmit(friendForm)" #friendForm="ngForm" ngNativeValidate>
+    <fieldset>
+        <label for="name">Nombre</label>
+        <input id="name" type="text" required [(ngModel)]="newFriend.name" name="name">
+    </fieldset>
+
+    <button type="submit" [disabled]="friendForm.form.invalid">Añadir</button>
+</form>
 
 
-    <ul>
-        <li *ngFor="let friend of friends.friends">
-            {{ friend.name }}
-        </li>
-    </ul>
-</div>
+<ul>
+    <li *ngFor="let friend of friends.friends">
+        {{ friend.name }}
+    </li>
+</ul>

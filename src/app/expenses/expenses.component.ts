@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import * as moment from 'moment';
 import { Expenses } from '../model/expenses';
 import { Friends } from '../model/friend';
 
@@ -13,10 +14,18 @@ export class ExpensesComponent {
   @Input() expenses: Expenses = { expenses: [] };
 
   friendName(friendId: string) {
-    return this.friends.friends.filter(friend => friend.id == friendId)[0].name
+    var filteredFriends = this.friends.friends.filter(friend => friend.id == friendId)
+    if (filteredFriends.length === 0) {
+      return '...'
+    }
+    return filteredFriends[0].name
   }
 
   amountFromDecimal(amount: string) {
     return parseInt(amount) / 100
+  }
+
+  ago(date: string) {
+    return moment(date).locale('es').fromNow()
   }
 }

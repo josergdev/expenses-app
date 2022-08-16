@@ -1,5 +1,8 @@
 <h2>Balance</h2>
 
 <div *ngFor="let balanceItem of balance.balanceItems">
-    <span>{{friendName(balanceItem.friendId)}}: {{ amountFromDecimal(balanceItem.amount) | currency:'EUR' }}</span>
+    <span>{{friendName(balanceItem.friendId)}}: <span [style.color]="amountColor(balanceItem.amount)">{{
+            amountFromDecimal(balanceItem.amount) |
+            currency:'EUR'}}</span>
+    </span>
 </div>

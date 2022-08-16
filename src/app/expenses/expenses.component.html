@@ -14,7 +14,7 @@
             <td>{{ friendName(expense.payerId) }}</td>
             <td>{{ expense.description }}</td>
             <td>{{ amountFromDecimal(expense.amount) | currency:'EUR' }}</td>
-            <td>{{ expense.dateTime | date }}</td>
+            <td>{{ ago(expense.dateTime) }}</td>
         </tr>
     </tbody>
 </table>

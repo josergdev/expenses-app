@@ -18,4 +18,8 @@ export class BalanceComponent {
   amountFromDecimal(amount: string) {
     return parseInt(amount) / 100
   }
+
+  amountColor(amount: string) {
+    return parseInt(amount) < 0 ? 'red' : 'green';
+  }
 }

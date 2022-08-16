@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, first, Observable } from 'rxjs';
 import { Expenses, NewExpense } from 'src/app/model/expenses';
 import { Friends, NewFriend } from '../model/friend';
 import { Balance } from '../model/balance';
@@ -33,15 +33,17 @@ export class StateService {
   }
 
   private updateExpensesState() {
-    this.apiService.getExpenses().subscribe(
-      expenses => this.expensesSubject.next(expenses)
-    );
+    this.apiService.getExpenses().subscribe(expenses => {
+      if (typeof expenses.expenses === 'undefined') {
+        this.expensesSubject.next({ expenses: [] })
+      } else {
+        this.expensesSubject.next(expenses)
+      }
+    })
   }
 
   getFriends(): Observable<Friends> {
-    this.apiService.getFriends().subscribe(
-      friends => this.friendsSubject.next(friends)
-    );
+    this.updateFriendsState()
 
     return this.friendsSubject.asObservable()
   }
@@ -53,9 +55,13 @@ export class StateService {
   }
 
   private updateFriendsState() {
-    this.apiService.getFriends().subscribe(
-      friends => this.friendsSubject.next(friends)
-    );
+    this.apiService.getFriends().subscribe(friends => {
+      if (typeof friends.friends === 'undefined') {
+        this.friendsSubject.next({ friends: [] })
+      } else {
+        this.friendsSubject.next(friends)
+      }
+    });
   }
 
   getBalance(): Observable<Balance> {
