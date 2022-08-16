@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Expenses, NewExpense } from 'src/app/model/expenses';
 import { Friends, NewFriend } from '../model/friend';
-import { v4 as uuidV4 } from 'uuid';
 import { Balance } from '../model/balance';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,39 +18,56 @@ export class StateService {
   private balance: Balance = { balanceItems: [] }
   private balanceSubject = new BehaviorSubject<Balance>(this.balance)
 
-  constructor() {
-    this.friendsSubject
-      .subscribe(friends => {
-        this.balance = {
-          balanceItems: friends.friends.map(friend => ({ name: friend.name, amount: "0" }))
-        }
-        this.balanceSubject.next(this.balance)
-      })
-  }
+  constructor(private apiService: ApiService) { }
 
   getExpenses(): Observable<Expenses> {
+    this.updateExpensesState();
+
     return this.expensesSubject.asObservable()
   }
 
   addExpense(newExpense: NewExpense) {
-    this.expenses = {
-      expenses: this.expenses.expenses.concat({ ...newExpense, payDate: new Date() })
-    }
-    this.expensesSubject.next(this.expenses)
+    this.apiService.addExpense(newExpense).subscribe(
+      _ => this.updateExpensesState()
+    )
+  }
+
+  private updateExpensesState() {
+    this.apiService.getExpenses().subscribe(
+      expenses => this.expensesSubject.next(expenses)
+    );
   }
 
   getFriends(): Observable<Friends> {
+    this.apiService.getFriends().subscribe(
+      friends => this.friendsSubject.next(friends)
+    );
+
     return this.friendsSubject.asObservable()
   }
 
   addFriend(friend: NewFriend): void {
-    this.friends = {
-      friends: this.friends.friends.concat({ id: uuidV4(), ...friend })
-    }
-    this.friendsSubject.next(this.friends)
+    this.apiService.addFriend(friend).subscribe(
+      _ => this.updateFriendsState()
+    )
+  }
+
+  private updateFriendsState() {
+    this.apiService.getFriends().subscribe(
+      friends => this.friendsSubject.next(friends)
+    );
   }
 
   getBalance(): Observable<Balance> {
+    this.updateBalanceState()
+
     return this.balanceSubject.asObservable()
   }
+
+  private updateBalanceState() {
+    this.apiService.getBalance().subscribe(
+      balance => this.balanceSubject.next(balance)
+    )
+  }
+
 }

@@ -21,7 +21,6 @@ export class AddFriendComponent implements OnInit {
 
   onSubmit(friendForm: NgForm) {
     this.stateService.addFriend({ ...this.newFriend })
-    friendForm.reset()
   }
 
 }

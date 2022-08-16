@@ -1,7 +1,20 @@
-<h2>Expenses:</h2>
+<h2>Gastos</h2>
 
-<ol>
-    <li *ngFor="let expense of expenses.expenses">
-        <pre>{{ expense | json }}</pre>
-    </li>
-</ol>
+<table>
+    <thead>
+        <tr>
+            <th>Pagador</th>
+            <th>Concepto</th>
+            <th>Monto</th>
+            <th>Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let expense of expenses.expenses">
+            <td>{{ friendName(expense.payerId) }}</td>
+            <td>{{ expense.description }}</td>
+            <td>{{ amountFromDecimal(expense.amount) | currency:'EUR' }}</td>
+            <td>{{ expense.dateTime | date }}</td>
+        </tr>
+    </tbody>
+</table>

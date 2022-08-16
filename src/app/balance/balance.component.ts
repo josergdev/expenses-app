@@ -1,21 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Balance } from '../model/balance';
-import { StateService } from '../services/state.service';
+import { Friends } from '../model/friend';
 
 @Component({
   selector: 'app-balance',
   templateUrl: './balance.component.html',
   styleUrls: ['./balance.component.css']
 })
-export class BalanceComponent implements OnInit {
+export class BalanceComponent {
+  @Input() balance!: Balance;
+  @Input() friends!: Friends;
 
-  balance: Balance = { balanceItems: [] }
-
-  constructor(private stateService: StateService) { }
-
-  ngOnInit(): void {
-    this.stateService.getBalance()
-      .subscribe(balance => this.balance = balance)
+  friendName(friendId: string) {
+    return this.friends.friends.filter(friend => friend.id == friendId)[0].name
   }
 
+  amountFromDecimal(amount: string) {
+    return parseInt(amount) / 100
+  }
 }

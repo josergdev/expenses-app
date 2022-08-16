@@ -1,5 +1,5 @@
 interface BalanceItem {
-    name: string,
+    friendId: string,
     amount: string
 }
 

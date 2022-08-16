@@ -1,23 +1,22 @@
-<h2>Add Expense</h2>
-
-<pre> {{newExpense | json}} </pre>
+<h2>Añadir gasto</h2>
 
 <form (ngSubmit)="onSubmit(expenseForm)" #expenseForm="ngForm" ngNativeValidate>
+    <fieldset>
+        <label for="friend">Amigo</label>
+        <select id="friend" [(ngModel)]="newExpense.payerId" name="payerId" required>
+            <option *ngFor="let friend of friends.friends" [value]="friend.id">
+                {{friend.name}}
+            </option>
+        </select>
 
-    <label for="friend">Amigo</label>
-    <select id="friend" [(ngModel)]="newExpense.payerId" name="payerId" required>
-        <option *ngFor="let friend of friends.friends" [value]="friend.id">
-            {{friend.name}}
-        </option>
-    </select>
+        <label for="description">Concepto</label>
+        <input id="description" type="text" required [(ngModel)]="newExpense.description" name="description">
 
-    <label for="description">Concepto</label>
-    <input id="description" type="text" required [(ngModel)]="newExpense.description" name="description">
-
-    <label for="amount">Pago</label>
-    <input id="amount" type="text" pattern="[0-9]+" required [(ngModel)]="newExpense.amount" name="amount">
+        <label for="amount">Pago</label>
+        <input id="amount" type="text" pattern="[0-9]+" required [(ngModel)]="newExpense.amount" name="amount">
+    </fieldset>
 
     <button type="submit" [disabled]="expenseForm.form.invalid">Añadir</button>
 </form>
 
-<pre> {{ expenses | async | json }}</pre>
+<app-expenses [expenses]="expenses" [friends]="friends"></app-expenses>

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Expenses, Expense } from '../model/expenses';
-import { StateService } from '../services/state.service';
+import { Component, Input } from '@angular/core';
+import { Expenses } from '../model/expenses';
+import { Friends } from '../model/friend';
 
 
 @Component({
@@ -8,14 +8,15 @@ import { StateService } from '../services/state.service';
   templateUrl: './expenses.component.html',
   styleUrls: ['./expenses.component.css']
 })
-export class ExpensesComponent implements OnInit {
-  expenses: Expenses = { expenses: [] };
+export class ExpensesComponent {
+  @Input() friends: Friends = { friends: [] };
+  @Input() expenses: Expenses = { expenses: [] };
 
-  constructor(private stateService: StateService) { }
-
-  ngOnInit(): void {
-    this.stateService.getExpenses()
-      .subscribe(expenses => this.expenses = expenses)
+  friendName(friendId: string) {
+    return this.friends.friends.filter(friend => friend.id == friendId)[0].name
   }
 
+  amountFromDecimal(amount: string) {
+    return parseInt(amount) / 100
+  }
 }

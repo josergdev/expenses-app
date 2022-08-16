@@ -7,7 +7,7 @@ interface NewExpense {
 interface Expense {
     payerId: string
     amount: string
-    payDate: Date
+    dateTime: Date
     description: string
 }
 
