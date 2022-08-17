@@ -5,12 +5,13 @@ import { Balance } from '../model/balance';
 import { Compensation } from '../model/compensation';
 import { Expense, Expenses, NewExpense } from '../model/expenses';
 import { Friend, Friends, NewFriend } from '../model/friend';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private expensesUrl = 'http://host.docker.internal:8080'
+  private expensesUrl = environment.API_URL
 
   constructor(private http: HttpClient) { }
 
